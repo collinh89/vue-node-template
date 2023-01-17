@@ -8,10 +8,27 @@
     >
 
     <v-spacer></v-spacer>
+    <!-- <v-menu bottom left>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn dark icon v-bind="attrs" v-on="on">
+          <v-icon>mdi-dots-vertical</v-icon>
+        </v-btn>
+      </template>
 
-    <v-btn :color="COLORS.LightAccent" icon>
-      <v-icon>mdi-account-circle</v-icon>
-    </v-btn>
+      <v-list>
+        <v-list-item v-for="(item, i) in items" :key="i">
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu> -->
+    <v-menu bottom left>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn :color="COLORS.LightAccent" v-bind="attrs" v-on="on" icon>
+          <v-icon>mdi-account-circle</v-icon>
+        </v-btn>
+      </template>
+      <UserProfile></UserProfile>
+    </v-menu>
   </v-app-bar>
   <v-navigation-drawer v-model="drawer" absolute bottom temporary>
     <v-list nav dense>
@@ -37,21 +54,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, ref } from "vue";
 import { COLORS } from "@/helpers/colors";
+import UserProfile from "./UserProfile.vue";
 export default defineComponent({
   name: "NavDrawer",
-  components: {},
+  components: { UserProfile },
   setup() {
     const drawer = ref<boolean>(false);
+    const items = [
+      { title: "Click Me" },
+      { title: "Click Me" },
+      { title: "Click Me" },
+      { title: "Click Me 2" },
+    ];
 
-    watch(
-      () => drawer.value,
-      (oldValue, newValue) => {
-        console.log(oldValue, newValue);
-      }
-    );
-    return { drawer, COLORS };
+    return { drawer, COLORS, items };
   },
 });
 </script>
